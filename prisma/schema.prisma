@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  username     String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+}
+
+model Notice {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  date        String
+  type        String
+  icon        String?  // Can store the name of the lucide-react icon
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Faculty {
+  id             String   @id @default(cuid())
+  name           String
+  designation    String
+  specialization String
+  email          String
+  imageUrl       String?
+  order          Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Student {
+  id        String   @id @default(cuid())
+  name      String
+  role      String
+  batch     String
+  type      String   // "Featured" | "Achievement"
+  imageUrl  String?
+  createdAt DateTime @default(now())
+}
+
+model PageContent {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  data      String   // JSON string
+  updatedAt DateTime @updatedAt
+}

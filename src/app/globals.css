@@ -1,0 +1,125 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-outfit);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+}
+
+:root {
+  --background: oklch(0.99 0 0);
+  --foreground: oklch(0.13 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.13 0 0);
+  --primary: oklch(0.52 0.22 255);
+  --primary-foreground: oklch(0.99 0 0);
+  --muted: oklch(0.96 0 0);
+  --muted-foreground: oklch(0.48 0 0);
+  --border: oklch(0.91 0 0);
+  --input: oklch(0.91 0 0);
+  --ring: oklch(0.52 0.22 255);
+  --radius: 0.625rem;
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.99 0 0);
+}
+
+.dark {
+  --background: oklch(0.11 0 0);
+  --foreground: oklch(0.97 0 0);
+  --card: oklch(0.15 0.005 255);
+  --card-foreground: oklch(0.97 0 0);
+  --primary: oklch(0.62 0.2 248);
+  --primary-foreground: oklch(0.11 0 0);
+  --muted: oklch(0.19 0.005 255);
+  --muted-foreground: oklch(0.62 0 0);
+  --border: oklch(0.23 0.005 255);
+  --input: oklch(0.23 0.005 255);
+  --ring: oklch(0.62 0.2 248);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.99 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+  html {
+    @apply font-sans scroll-smooth;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading tracking-tight;
+  }
+  ::selection {
+    @apply bg-primary/20 text-foreground;
+  }
+}
+
+@layer utilities {
+  /* Subtle structural tech grid */
+  .bg-grid-tech {
+    background-size: 40px 40px;
+    background-image: 
+      linear-gradient(to right, oklch(0.5 0 0 / 0.07) 1px, transparent 1px),
+      linear-gradient(to bottom, oklch(0.5 0 0 / 0.07) 1px, transparent 1px);
+  }
+  .dark .bg-grid-tech {
+    background-image: 
+      linear-gradient(to right, oklch(0.8 0 0 / 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, oklch(0.8 0 0 / 0.04) 1px, transparent 1px);
+  }
+
+  /* Fine dot matrix */
+  .bg-dot-matrix {
+    background-size: 22px 22px;
+    background-image: radial-gradient(circle, oklch(0.5 0 0 / 0.12) 1px, transparent 1px);
+  }
+  .dark .bg-dot-matrix {
+    background-image: radial-gradient(circle, oklch(0.8 0 0 / 0.07) 1px, transparent 1px);
+  }
+
+  /* Premium bento card */
+  .bento-card {
+    @apply bg-card border border-border rounded-xl shadow-sm transition-all duration-300;
+    @apply hover:border-primary/40 hover:shadow-[0_4px_24px_-4px_oklch(0.52_0.22_255_/_0.1)];
+  }
+  .dark .bento-card {
+    @apply hover:shadow-[0_4px_24px_-4px_oklch(0.62_0.2_248_/_0.15)];
+  }
+
+  /* Tech monospace labels */
+  .tech-mono {
+    @apply font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground;
+  }
+
+  /* Gradient text utility */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/60;
+  }
+
+  /* Section fade-in from viewport */
+  .section-fade {
+    @apply opacity-0 translate-y-4;
+  }
+}
