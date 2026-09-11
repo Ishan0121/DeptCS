@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
@@ -26,34 +27,54 @@
 }
 
 :root {
+  /* 
+  Previous Blue Palette:
+  --primary: oklch(0.52 0.22 255);
+  --primary-foreground: oklch(0.99 0 0);
+  --ring: oklch(0.52 0.22 255);
+  */
   --background: oklch(0.99 0 0);
   --foreground: oklch(0.13 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.13 0 0);
-  --primary: oklch(0.52 0.22 255);
-  --primary-foreground: oklch(0.99 0 0);
+  
+  --primary: #E5AC06;
+  --primary-foreground: oklch(0.13 0 0);
+  
   --muted: oklch(0.96 0 0);
   --muted-foreground: oklch(0.48 0 0);
   --border: oklch(0.91 0 0);
   --input: oklch(0.91 0 0);
-  --ring: oklch(0.52 0.22 255);
+  
+  --ring: var(--primary);
+  
   --radius: 0.625rem;
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.99 0 0);
 }
 
 .dark {
+  /* 
+  Previous Blue Palette:
+  --primary: oklch(0.62 0.2 248);
+  --primary-foreground: oklch(0.11 0 0);
+  --ring: oklch(0.62 0.2 248);
+  */
   --background: oklch(0.11 0 0);
   --foreground: oklch(0.97 0 0);
   --card: oklch(0.15 0.005 255);
   --card-foreground: oklch(0.97 0 0);
-  --primary: oklch(0.62 0.2 248);
-  --primary-foreground: oklch(0.11 0 0);
+  
+  --primary: #E5AC06;
+  --primary-foreground: oklch(0.13 0 0);
+  
   --muted: oklch(0.19 0.005 255);
   --muted-foreground: oklch(0.62 0 0);
   --border: oklch(0.23 0.005 255);
   --input: oklch(0.23 0.005 255);
-  --ring: oklch(0.62 0.2 248);
+  
+  --ring: var(--primary);
+  
   --destructive: oklch(0.704 0.191 22.216);
   --destructive-foreground: oklch(0.99 0 0);
 }
@@ -102,10 +123,15 @@
   /* Premium bento card */
   .bento-card {
     @apply bg-card border border-border rounded-xl shadow-sm transition-all duration-300;
-    @apply hover:border-primary/40 hover:shadow-[0_4px_24px_-4px_oklch(0.52_0.22_255_/_0.1)];
+    @apply hover:border-primary/40 hover:shadow-xl hover:shadow-primary/15;
   }
   .dark .bento-card {
-    @apply hover:shadow-[0_4px_24px_-4px_oklch(0.62_0.2_248_/_0.15)];
+    @apply hover:shadow-xl hover:shadow-primary/15;
+  }
+
+  /* Frosted Glass Toasts and Cards */
+  .toaster [data-sonner-toast], .glass-card {
+    @apply !bg-background/60 !backdrop-blur-xl !border !border-border !shadow-lg;
   }
 
   /* Tech monospace labels */

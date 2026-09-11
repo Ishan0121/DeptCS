@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { ArrowRight, BookOpen, GraduationCap, Users, Bell, ChevronRight } from "lucide-react"
 import { motion } from "framer-motion"
 import { buttonVariants } from "@/components/ui/button"
@@ -56,15 +57,42 @@ export default function Home() {
     <div className="flex flex-col min-h-screen bg-background">
 
       {/* ── Hero ── */}
-      <section className="relative w-full py-24 md:py-32 lg:py-44 overflow-hidden border-b border-border">
+      <section className="relative w-full h-screen flex justify-center items-center overflow-hidden border-b border-border">
         {/* BG layers */}
-        <div className="absolute inset-0 bg-grid-tech" />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-transparent to-background pointer-events-none" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-primary/8 blur-[120px] rounded-full pointer-events-none" />
+        <div className="absolute inset-0 bg-background" />
+        
+        {/* The landscape image */}
+        <div 
+          className="absolute inset-0 opacity-15 md:opacity-[0.45] transition-opacity duration-700" 
+          style={{ 
+            backgroundImage: "url('/images/college.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }} 
+        />
+
+        {/* The grid mask overlay to break the image into pieces */}
+        <div 
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundSize: "44px 44px",
+            backgroundImage: `
+              linear-gradient(to right, var(--background) 2px, transparent 2px),
+              linear-gradient(to bottom, var(--background) 2px, transparent 2px)
+            `
+          }}
+        />
+
+        {/* Gradient fade to bottom and sides so it blends smoothly */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background/10 via-background/60 to-background pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-transparent to-background/80 pointer-events-none hidden md:block" />
+
+        {/* Glowing orb */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/10 blur-[120px] rounded-full pointer-events-none" />
 
         {/* Corner brackets */}
-        <div className="absolute top-6 left-6 w-10 h-10 border-l-2 border-t-2 border-primary/25 pointer-events-none" />
-        <div className="absolute bottom-6 right-6 w-10 h-10 border-r-2 border-b-2 border-primary/20 pointer-events-none" />
+        <div className="absolute top-6 left-6 w-10 h-10 border-l-2 border-t-2 border-primary/25 pointer-events-none hidden md:block" />
+        <div className="absolute bottom-6 right-6 w-10 h-10 border-r-2 border-b-2 border-primary/20 pointer-events-none hidden md:block" />
 
         <div className="container px-4 md:px-6 relative z-10 mx-auto">
           <div className="grid lg:grid-cols-[1.1fr_1fr] gap-16 items-center">
@@ -89,11 +117,9 @@ export default function Home() {
                 variants={fadeUp}
                 className="text-5xl sm:text-6xl md:text-7xl lg:text-[80px] font-black tracking-[-0.03em] leading-[1.04] text-foreground mb-7"
               >
-                Department
+                Department of
                 <br />
-                <span className="text-primary">of Computer</span>
-                <br />
-                Science
+                <span className="text-primary">Computer Science</span>
               </motion.h1>
 
               {/* Sub */}
@@ -128,104 +154,37 @@ export default function Home() {
               </motion.div>
             </motion.div>
 
-            {/* Right: Terminal */}
+            {/* Right: Department Image */}
             <motion.div
               initial={{ opacity: 0, x: 24 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7, delay: 0.25 }}
-              className="hidden lg:block relative w-full max-w-md mx-auto lg:ml-auto lg:mr-0"
+              className="relative w-full max-w-md mx-auto mt-8 lg:mt-0 lg:ml-auto lg:mr-0"
             >
-              <div className="absolute inset-0 bg-primary/15 blur-[80px] rounded-full" />
+              <div className="absolute inset-0 bg-primary/20 blur-[80px] rounded-full pointer-events-none" />
 
               <motion.div
-                initial={{ rotateY: 12, rotateX: 4 }}
-                animate={{ rotateY: -4, rotateX: 2 }}
-                transition={{ duration: 5, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
-                className="relative rounded-xl overflow-hidden border border-border/60 bg-card/80 backdrop-blur-2xl shadow-2xl shadow-primary/10 z-10"
+                whileHover={{ rotateY: -5, rotateX: 2, scale: 1.02 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="relative rounded-2xl overflow-hidden border border-border/60 bg-card/50 backdrop-blur-sm shadow-2xl shadow-primary/10 z-10 aspect-[4/3]"
                 style={{ transformStyle: "preserve-3d", perspective: "1000px" }}
               >
-                {/* Terminal Header */}
-                <div className="flex items-center gap-2 px-4 py-3 border-b border-border/50 bg-muted/40">
-                  <div className="flex gap-1.5">
-                    <div className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
-                    <div className="w-2.5 h-2.5 rounded-full bg-amber-500/70" />
-                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/70" />
-                  </div>
-                  <div className="flex-1 text-center font-mono text-[10px] text-muted-foreground/50 tracking-widest">
-                    sys_core@dept-cs:~
-                  </div>
-                </div>
+                <Image
+                  src="/images/abcd.jpg"
+                  alt="Department Building"
+                  fill
+                  className="object-cover transition-transform duration-700 hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, 400px"
+                  priority
+                />
 
-                {/* Terminal Body */}
-                <div className="p-5 font-mono text-[12px] text-muted-foreground space-y-3">
-                  <div className="flex gap-3">
-                    <span className="text-primary shrink-0">➜</span>
-                    <span className="text-foreground">./initialize_dept.sh</span>
-                  </div>
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.6 }}
-                    className="space-y-1.5 pl-6"
-                  >
-                    {[
-                      "[OK] Booting department core...",
-                      "[OK] Loading syllabus frameworks...",
-                      "[OK] Connecting faculty nodes...",
-                      "[OK] Syncing student records...",
-                    ].map((line, i) => (
-                      <motion.div
-                        key={i}
-                        initial={{ opacity: 0, x: -8 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.7 + i * 0.25 }}
-                        className="text-muted-foreground/55"
-                      >
-                        {line}
-                      </motion.div>
-                    ))}
-                  </motion.div>
+                {/* Subtle gradient overlay for premium feel */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-background/60 via-transparent to-transparent pointer-events-none" />
 
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 2.0 }}
-                    className="flex gap-3 pt-1"
-                  >
-                    <span className="text-primary shrink-0">➜</span>
-                    <span className="text-foreground">run diagnostics --visual</span>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    transition={{ delay: 2.5, duration: 0.4 }}
-                    className="overflow-hidden"
-                  >
-                    <div className="grid grid-cols-7 gap-1.5 items-end h-20 pt-3 border-t border-dashed border-border/40 mt-2">
-                      {[45, 72, 38, 90, 55, 80, 65].map((h, i) => (
-                        <motion.div
-                          key={i}
-                          initial={{ height: 0 }}
-                          animate={{ height: `${h}%` }}
-                          transition={{ delay: 2.8 + i * 0.08, duration: 0.8, type: "spring", stiffness: 80 }}
-                          className="w-full bg-primary/15 rounded-t-sm relative"
-                        >
-                          <div className="absolute top-0 left-0 w-full h-[2px] bg-primary/60 rounded-full shadow-[0_0_6px_oklch(0.52_0.22_255_/_0.5)]" />
-                        </motion.div>
-                      ))}
-                    </div>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 4.2 }}
-                    className="flex gap-3 items-center"
-                  >
-                    <span className="text-primary shrink-0">➜</span>
-                    <span className="inline-block w-[7px] h-[14px] bg-foreground/70 animate-pulse rounded-[1px]" />
-                  </motion.div>
+                {/* Floating badge */}
+                <div className="absolute bottom-4 left-4 bg-background/80 backdrop-blur-md border border-border/50 rounded-lg px-3 py-2 flex items-center gap-2 shadow-lg">
+                  <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="text-[10px] font-mono font-semibold tracking-wider uppercase text-foreground">Main Campus</span>
                 </div>
               </motion.div>
             </motion.div>

@@ -111,7 +111,7 @@ export default function AcademicsPageClient({ data }: { data: any }) {
         tag="CURRICULUM //"
       />
 
-      <div className="container px-4 py-16 md:py-20 mx-auto max-w-7xl">
+      <div className="container px-4 pt-16 pb-16 md:pt-20 md:pb-20 mx-auto max-w-7xl">
         <div className="grid lg:grid-cols-[220px_1fr] gap-10 lg:gap-20 items-start">
 
           {/* ── Left: Sticky Sidebar ── */}

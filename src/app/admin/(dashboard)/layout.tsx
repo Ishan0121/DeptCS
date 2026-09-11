@@ -65,7 +65,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-6 md:p-10 lg:p-12 overflow-y-auto relative">
+      <main className="flex-1 p-6 md:p-20 lg:p-24 overflow-y-auto relative">
         <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
         <div className="relative z-10 max-w-7xl mx-auto">
           {children}

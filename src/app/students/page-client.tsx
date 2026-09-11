@@ -46,7 +46,7 @@ export default function StudentsPageClient({ students }: { students: any[] }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.4 }}
-        className="container px-4 py-16 md:py-20 mx-auto max-w-5xl"
+        className="container px-4 py-16 mx-auto max-w-5xl"
       >
 
         {/* ── Key Achievements ── */}
@@ -122,6 +122,8 @@ export default function StudentsPageClient({ students }: { students: any[] }) {
                           alt={student.name}
                           width={64}
                           height={64}
+                          unoptimized
+                          priority={index < 4}
                           className="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-500"
                         />
                       </div>

@@ -14,14 +14,26 @@ const fadeUp = {
   show: { opacity: 1, y: 0, transition: { type: "spring" as const, stiffness: 55, damping: 18 } },
 }
 
-const STATS = [
-  { label: "Established", value: "2006", icon: CalendarDays },
-  { label: "Faculty", value: "8+", icon: Users },
-  { label: "Intake / Year", value: "120", icon: BookOpen },
-  { label: "NAAC Grade", value: "A", icon: Award },
-]
+export default function AboutPageClient({ content, facultyCount = 0 }: { content: any, facultyCount?: number }) {
+  let studentsLabel = content?.showTotalStudents ? "Total Students" : "Intake / Year"
+  let studentsCount = 120
+  
+  if (content?.studentIntake?.length) {
+    const total = content.studentIntake.reduce((acc: number, curr: any) => acc + (curr.count || 0), 0)
+    if (content.showTotalStudents) {
+      studentsCount = total
+    } else {
+      studentsCount = Math.round(total / content.studentIntake.length)
+    }
+  }
 
-export default function AboutPageClient({ content }: { content: any }) {
+  const STATS = [
+    { label: "Established", value: "2006", icon: CalendarDays },
+    { label: "Faculty", value: `${facultyCount}+`, icon: Users },
+    { label: studentsLabel, value: studentsCount.toString(), icon: BookOpen },
+    { label: "NAAC Grade", value: content?.naacGrade || "A", icon: Award },
+  ]
+
   return (
     <div className="bg-background min-h-screen">
       <HeroHeader
@@ -120,7 +132,7 @@ export default function AboutPageClient({ content }: { content: any }) {
                   <h3 className="text-xl font-bold text-foreground">Vidyasagar University</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed max-w-lg">
                     Affiliated institution, proudly accredited with NAAC Grade{" "}
-                    <span className="font-bold text-foreground">"A"</span>. Committed to high academic standards and fostering innovation in technology education.
+                    <span className="font-bold text-foreground">"{content?.naacGrade || "A"}"</span>. Committed to high academic standards and fostering innovation in technology education.
                   </p>
                 </div>
 

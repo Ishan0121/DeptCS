@@ -1,7 +1,7 @@
 "use client"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Bell, AlertCircle } from "lucide-react"
+import { Bell, AlertCircle, Clock, Archive } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { HeroHeader } from "@/components/hero-header"
 import { useState } from "react"
@@ -89,7 +89,7 @@ export default function NoticesPageClient({ latestNotices, pastNotices }: { late
         tag="COMMUNICATIONS //"
       />
 
-      <div className="container px-4 py-16 mx-auto max-w-4xl">
+      <div className="container px-4 pt-16 pb-16 mx-auto max-w-4xl">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
 
           {/* Header + tab row */}
@@ -101,30 +101,32 @@ export default function NoticesPageClient({ latestNotices, pastNotices }: { late
               </h2>
             </div>
 
-            <TabsList className="w-full sm:w-auto grid grid-cols-2 bg-muted/30 border border-border rounded-lg p-1 h-auto gap-1">
+            <TabsList className="w-full sm:w-fit grid grid-cols-2 bg-muted/20 backdrop-blur-md border border-border/50 rounded-full p-1.5 h-auto shadow-inner">
               <TabsTrigger
                 value="latest"
-                className="text-[11px] font-bold uppercase tracking-wider rounded-md data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm py-2"
+                className="group flex items-center justify-center gap-2 text-[11px] font-bold uppercase tracking-widest rounded-full data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md py-2.5 transition-all duration-300"
               >
-                Latest <span className="ml-1.5 font-mono text-muted-foreground">({latestNotices.length})</span>
+                <Clock className="w-3.5 h-3.5 opacity-50 group-data-[state=active]:opacity-100 transition-opacity" />
+                Latest <span className="font-mono text-[10px] opacity-60 group-data-[state=active]:opacity-90">({latestNotices.length})</span>
               </TabsTrigger>
               <TabsTrigger
                 value="past"
-                className="text-[11px] font-bold uppercase tracking-wider rounded-md data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm py-2"
+                className="group flex items-center justify-center gap-2 text-[11px] font-bold uppercase tracking-widest rounded-full data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md py-2.5 transition-all duration-300"
               >
-                Archive <span className="ml-1.5 font-mono text-muted-foreground">({pastNotices.length})</span>
+                <Archive className="w-3.5 h-3.5 opacity-50 group-data-[state=active]:opacity-100 transition-opacity" />
+                Archive <span className="font-mono text-[10px] opacity-60 group-data-[state=active]:opacity-90">({pastNotices.length})</span>
               </TabsTrigger>
             </TabsList>
           </div>
 
-          <AnimatePresence mode="wait">
+          <div className="relative">
             <TabsContent key="latest" value="latest" className="mt-0 outline-none">
               <NoticeList notices={latestNotices} />
             </TabsContent>
             <TabsContent key="past" value="past" className="mt-0 outline-none">
               <NoticeList notices={pastNotices} />
             </TabsContent>
-          </AnimatePresence>
+          </div>
 
         </Tabs>
       </div>

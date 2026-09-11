@@ -1,6 +1,7 @@
 "use client"
 
-import { Users, Mail, BookOpen } from "lucide-react"
+import { Users, GraduationCap, Mail, Briefcase, BookOpen, ArrowRight } from "lucide-react"
+import Link from "next/link"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import { HeroHeader } from "@/components/hero-header"
@@ -24,7 +25,7 @@ export default function FacultyPageClient({ faculty }: { faculty: any[] }) {
         icon={Users}
       />
 
-      <div className="container px-4 py-20 mx-auto max-w-7xl">
+      <div className="container px-4 pt-16 pb-20 mx-auto max-w-7xl">
         
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div>
@@ -62,7 +63,9 @@ export default function FacultyPageClient({ faculty }: { faculty: any[] }) {
                           src={member.imageUrl || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(member.name)}`}
                           alt={member.name}
                           fill
+                          unoptimized
                           sizes="(max-width: 768px) 100px, 120px"
+                          priority={index < 4}
                           className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-out scale-100 group-hover:scale-105"
                         />
                       </div>
@@ -72,9 +75,12 @@ export default function FacultyPageClient({ faculty }: { faculty: any[] }) {
                     <div className="flex-1 pt-1">
                       <div className="tech-mono text-[10px] text-muted-foreground mb-3 flex items-center justify-between">
                         <span className="tracking-widest">ID_0{index + 1}</span>
-                        <span className="w-2 h-2 rounded-full bg-border group-hover:bg-primary transition-colors duration-500 shadow-[0_0_0_rgba(var(--primary),0)] group-hover:shadow-[0_0_10px_rgba(var(--primary),0.5)]" />
+                        <span className="w-2 h-2 rounded-full bg-border group-hover:bg-primary transition-colors duration-500 shadow-sm group-hover:shadow-md group-hover:shadow-primary/50" />
                       </div>
                       <h3 className="text-xl sm:text-2xl font-bold leading-none text-foreground group-hover:text-primary transition-colors duration-300 mb-2">{member.name}</h3>
+                      {member.departmentPosition && (
+                        <p className="text-xs font-bold text-primary mb-1 uppercase tracking-widest bg-primary/10 w-fit px-2 py-0.5 rounded-sm">{member.departmentPosition}</p>
+                      )}
                       <p className="text-sm font-medium text-primary/80 leading-snug">{member.designation}</p>
                     </div>
                   </div>
@@ -90,14 +96,24 @@ export default function FacultyPageClient({ faculty }: { faculty: any[] }) {
                         <p className="text-sm leading-relaxed text-foreground font-medium">{member.specialization}</p>
                       </div>
                       
-                      <div>
-                        <div className="tech-mono text-[10px] text-muted-foreground mb-2 flex items-center gap-2">
-                          <Mail className="w-3 h-3" />
-                          CONTACT_PROTOCOL
+                      <div className="flex flex-col gap-2">
+                        {member.email && (
+                          <div className="flex items-center gap-2 text-muted-foreground group/mail">
+                            <Mail className="w-4 h-4 group-hover/mail:text-primary transition-colors" />
+                            <a href={`mailto:${member.email}`} className="text-sm truncate group-hover/mail:text-primary transition-colors">
+                              {member.email}
+                            </a>
+                          </div>
+                        )}
+                        <div className="mt-2">
+                          <Link 
+                            href={`/faculty/${member.id}`}
+                            prefetch={true}
+                            className="text-sm text-primary hover:underline flex items-center gap-1"
+                          >
+                            View Profile <ArrowRight className="w-3 h-3" />
+                          </Link>
                         </div>
-                        <a href={`mailto:${member.email}`} className="text-sm font-mono text-muted-foreground hover:text-primary transition-colors truncate block">
-                          {member.email}
-                        </a>
                       </div>
                     </div>
                   </div>

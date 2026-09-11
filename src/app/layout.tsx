@@ -48,7 +48,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${outfit.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${outfit.variable}`} data-scroll-behavior="smooth">
       <body className="min-h-screen flex flex-col bg-background font-sans antialiased selection:bg-primary/30">
         <SmoothScrolling>
           <ThemeProvider

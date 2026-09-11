@@ -12,7 +12,7 @@ interface HeroHeaderProps {
 
 export function HeroHeader({ title, description, icon: Icon, tag }: HeroHeaderProps) {
   return (
-    <div className="relative py-16 md:py-24 border-b border-border bg-background overflow-hidden">
+    <div className="relative pt-32 pb-16 md:pt-40 md:pb-24 border-b border-border bg-background overflow-hidden">
       {/* Background layers */}
       <div className="absolute inset-0 bg-grid-tech pointer-events-none" />
       <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-transparent to-background pointer-events-none" />
@@ -29,23 +29,23 @@ export function HeroHeader({ title, description, icon: Icon, tag }: HeroHeaderPr
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="flex flex-col space-y-5"
+          className="flex flex-col items-center text-center space-y-5"
         >
           {/* Icon + tag row */}
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col items-center gap-3">
             {Icon && (
               <motion.div
                 initial={{ scale: 0.85, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ delay: 0.1, duration: 0.35 }}
-                className="w-11 h-11 rounded-lg bg-muted/80 border border-border flex items-center justify-center relative overflow-hidden shrink-0"
+                className="w-12 h-12 rounded-xl bg-muted/80 border border-border flex items-center justify-center relative overflow-hidden shrink-0 shadow-sm"
               >
                 <div className="absolute inset-0 bg-dot-matrix opacity-30" />
-                <Icon className="h-5 w-5 text-primary relative z-10" />
+                <Icon className="h-6 w-6 text-primary relative z-10" />
               </motion.div>
             )}
             {tag && (
-              <span className="tech-mono text-primary">{tag}</span>
+              <span className="tech-mono text-primary tracking-[0.2em]">{tag}</span>
             )}
           </div>
 
@@ -54,7 +54,7 @@ export function HeroHeader({ title, description, icon: Icon, tag }: HeroHeaderPr
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.15 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-foreground leading-[1.08]"
+            className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-foreground leading-[1.1] max-w-3xl"
           >
             {title}
           </motion.h1>
@@ -64,7 +64,7 @@ export function HeroHeader({ title, description, icon: Icon, tag }: HeroHeaderPr
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.28 }}
-            className="text-base md:text-lg text-muted-foreground max-w-2xl leading-relaxed border-l-2 border-primary/40 pl-4"
+            className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed"
           >
             {description}
           </motion.p>

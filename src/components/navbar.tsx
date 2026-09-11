@@ -33,10 +33,10 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 w-full transition-all duration-300",
+        "fixed left-1/2 -translate-x-1/2 top-4 z-50 w-[calc(100%-2rem)] max-w-7xl transition-all duration-300 rounded-full border border-border/20 dark:border-white/10 bg-muted/20 backdrop-blur-md overflow-hidden",
         scrolled
-          ? "border-b border-border/60 bg-background/85 backdrop-blur-2xl shadow-sm"
-          : "bg-background/60 backdrop-blur-xl border-b border-transparent"
+          ? "bg-background/40 border-border/50 shadow-md"
+          : "bg-background/60 border-border/20 shadow-sm"
       )}
     >
       {/* Animated top accent line */}
@@ -46,7 +46,7 @@ export function Navbar() {
 
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 group shrink-0">
-          <div className="w-7 h-7 rounded-[6px] bg-primary flex items-center justify-center relative overflow-hidden shadow-[0_0_12px_oklch(0.52_0.22_255_/_0.4)]">
+          <div className="w-7 h-7 rounded-[6px] bg-primary flex items-center justify-center relative overflow-hidden shadow-sm shadow-primary/40">
             <div className="absolute inset-0 bg-dot-matrix opacity-30 mix-blend-overlay" />
             <span className="text-primary-foreground font-black text-xs font-mono relative z-10 tracking-tight">CS</span>
           </div>
@@ -54,7 +54,7 @@ export function Navbar() {
             <span className="font-extrabold text-sm tracking-tight group-hover:text-primary transition-colors duration-200 leading-none">
               Department of CS
             </span>
-            <span className="tech-mono text-[9px] text-muted-foreground/60 leading-none">Debra College</span>
+            <span className="tech-mono text-[9px] text-muted-foreground/60 leading-none pt-2">Debra College</span>
           </div>
         </Link>
 
@@ -94,7 +94,7 @@ export function Navbar() {
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger
               className={cn(
-                "lg:hidden w-9 h-9 rounded-md border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+                "lg:hidden w-9 h-9 rounded-md border border-border dark:border-white/10 flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted dark:hover:bg-white/5 transition-colors"
               )}
             >
               <AnimatePresence mode="wait" initial={false}>
@@ -111,12 +111,12 @@ export function Navbar() {
               <span className="sr-only">Toggle Menu</span>
             </SheetTrigger>
 
-            <SheetContent side="right" className="w-72 bg-background/95 backdrop-blur-xl border-l border-border p-0">
+            <SheetContent side="right" className="w-72 bg-background/95 backdrop-blur-xl border-l border-border dark:border-white/10 p-0">
               <div className="flex flex-col h-full">
                 <div className="absolute top-0 left-0 w-full h-[1.5px] bg-gradient-to-r from-primary via-primary/50 to-transparent" />
 
                 {/* Sheet header */}
-                <div className="flex items-center justify-between px-5 py-5 border-b border-border">
+                <div className="flex items-center justify-between px-5 py-5 border-b border-border dark:border-white/10">
                   <Link
                     href="/"
                     className="flex items-center gap-2.5 group"
@@ -146,8 +146,8 @@ export function Navbar() {
                           className={cn(
                             "flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-semibold transition-colors",
                             isActive
-                              ? "bg-primary/10 text-primary border border-primary/20"
-                              : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                              ? "bg-primary/10 text-primary border border-primary/20 dark:border-primary/30"
+                              : "text-muted-foreground hover:bg-muted dark:hover:bg-white/5 hover:text-foreground"
                           )}
                         >
                           {nav.name}
@@ -161,7 +161,7 @@ export function Navbar() {
                 </nav>
 
                 {/* Mobile footer */}
-                <div className="px-5 py-4 border-t border-border">
+                <div className="px-5 py-4 border-t border-border dark:border-white/10">
                   <p className="tech-mono text-[9px] text-muted-foreground/50">CS_DEPT // DEBRA COLLEGE</p>
                 </div>
               </div>

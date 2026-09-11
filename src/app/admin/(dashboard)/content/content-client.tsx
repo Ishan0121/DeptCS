@@ -7,6 +7,8 @@ import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Switch } from "@/components/ui/switch"
+import { Input } from "@/components/ui/input"
 import { toast } from "sonner"
 
 export default function ContentClient({ initialAboutContent, initialAcademicsContent }: { initialAboutContent: any, initialAcademicsContent: any }) {
@@ -89,6 +91,74 @@ export default function ContentClient({ initialAboutContent, initialAcademicsCon
                 value={about.mission} 
                 onChange={e => setAbout({...about, mission: e.target.value})} 
               />
+            </div>
+
+            <div className="space-y-6 border-t border-border/50 pt-6 mt-6">
+              <h3 className="text-xl font-bold">Metrics (About Page)</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <Label>NAAC Grade</Label>
+                  <Input 
+                    value={about.naacGrade || ""} 
+                    onChange={e => setAbout({...about, naacGrade: e.target.value})} 
+                    placeholder="e.g. A"
+                  />
+                </div>
+                <div className="space-y-3 flex flex-col justify-center">
+                  <Label>Student Display Mode</Label>
+                  <div className="flex items-center gap-3">
+                    <Switch 
+                      checked={about.showTotalStudents || false} 
+                      onCheckedChange={checked => setAbout({...about, showTotalStudents: checked})} 
+                    />
+                    <span className="text-sm font-medium">
+                      {about.showTotalStudents ? "Show Total Students (Sum)" : "Show Intake / Year (Average)"}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="space-y-3">
+                <Label>Student Intake by Year / Semester</Label>
+                <div className="space-y-3">
+                  {(about.studentIntake || []).map((intake: any, i: number) => (
+                    <div key={i} className="flex gap-3">
+                      <Input 
+                        placeholder="Label (e.g. 1st Year)" 
+                        value={intake.label} 
+                        onChange={e => {
+                          const newIntake = [...(about.studentIntake || [])]
+                          newIntake[i].label = e.target.value
+                          setAbout({...about, studentIntake: newIntake})
+                        }} 
+                      />
+                      <Input 
+                        type="number" 
+                        placeholder="Count" 
+                        value={intake.count} 
+                        onChange={e => {
+                          const newIntake = [...(about.studentIntake || [])]
+                          newIntake[i].count = parseInt(e.target.value) || 0
+                          setAbout({...about, studentIntake: newIntake})
+                        }} 
+                      />
+                      <Button variant="destructive" type="button" onClick={() => {
+                        const newIntake = [...(about.studentIntake || [])]
+                        newIntake.splice(i, 1)
+                        setAbout({...about, studentIntake: newIntake})
+                      }}>
+                        Remove
+                      </Button>
+                    </div>
+                  ))}
+                  <Button variant="outline" type="button" onClick={() => {
+                    const newIntake = [...(about.studentIntake || []), { label: "", count: 0 }]
+                    setAbout({...about, studentIntake: newIntake})
+                  }}>
+                    + Add Year/Semester
+                  </Button>
+                </div>
+              </div>
             </div>
             
             <Button type="submit" disabled={loadingAbout} className="w-full">

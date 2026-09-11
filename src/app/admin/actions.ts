@@ -60,27 +60,67 @@ export async function deleteNotice(id: string) {
 // FACULTY
 // ----------------------------------------------------------------------------
 export async function getFaculty() {
-  return prisma.faculty.findMany({ orderBy: { order: 'asc' } })
+  const allFaculty = await prisma.faculty.findMany({ 
+    orderBy: { name: 'asc' }
+  })
+
+  // Group by order defined vs undefined
+  const ordered = allFaculty.filter(f => f.order !== null && f.order > 0)
+  const unordered = allFaculty.filter(f => f.order === null || f.order <= 0)
+
+  const result: typeof allFaculty = []
+  
+  // Place ordered faculty in their specific 1-based slots (e.g. order 4 goes to index 3)
+  for (const f of ordered) {
+    // If multiple have same order, we might overwrite, but we'll assume uniqueness for slots
+    result[f.order! - 1] = f
+  }
+
+  // Find max length needed to iterate up to (end of sparse array)
+  const maxOrderedIndex = result.length
+
+  const finalResult: typeof allFaculty = []
+  let unorderedIndex = 0
+  let resultCursor = 0
+
+  // Fill gaps with unordered items, and append the rest
+  while (unorderedIndex < unordered.length || resultCursor < maxOrderedIndex) {
+    if (result[resultCursor] !== undefined) {
+      finalResult.push(result[resultCursor])
+    } else {
+      if (unorderedIndex < unordered.length) {
+        finalResult.push(unordered[unorderedIndex])
+        unorderedIndex++
+      }
+    }
+    resultCursor++
+  }
+
+  return finalResult
 }
 
-export async function createFaculty(data: { name: string; designation: string; specialization: string; email: string; imageUrl?: string; order?: number }) {
+export async function getFacultyCount() {
+  return prisma.faculty.count()
+}
+
+export async function createFaculty(data: { name: string; designation: string; specialization: string; email: string; departmentPosition?: string | null; details?: string; imageUrl?: string; order?: number | null }) {
   await requireAuth()
   const res = await prisma.faculty.create({ data })
-  revalidatePath("/faculty")
+  revalidatePath("/faculty", "layout")
   return res
 }
 
-export async function updateFaculty(id: string, data: { name: string; designation: string; specialization: string; email: string; imageUrl?: string; order?: number }) {
+export async function updateFaculty(id: string, data: { name: string; designation: string; specialization: string; email: string; departmentPosition?: string | null; details?: string; imageUrl?: string; order?: number | null }) {
   await requireAuth()
   const res = await prisma.faculty.update({ where: { id }, data })
-  revalidatePath("/faculty")
+  revalidatePath("/faculty", "layout")
   return res
 }
 
 export async function deleteFaculty(id: string) {
   await requireAuth()
   const res = await prisma.faculty.delete({ where: { id } })
-  revalidatePath("/faculty")
+  revalidatePath("/faculty", "layout")
   return res
 }
 

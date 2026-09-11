@@ -28,11 +28,13 @@ model Notice {
 model Faculty {
   id             String   @id @default(cuid())
   name           String
-  designation    String
-  specialization String
-  email          String
+  designation    String?
+  specialization String?
+  email              String?
+  departmentPosition String?
+  details            String?
   imageUrl       String?
-  order          Int      @default(0)
+  order          Int?
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 }
